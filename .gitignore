@@ -1,0 +1,7 @@
+build/
+main.pdf
+*.log
+pic/aux_tol.png
+pic/fldiff_tol.png
+pic/quality.png
+pic/tolnlines.png

@@ -1,0 +1,54 @@
+\begin{frame}
+  \frametitle{Reminder on Abinit parallelization}
+  
+  The \texttt{paral\_kgb} mode imply:
+  \begin{itemize}
+    \item Parallelization over $k$ vectors, which is trivial because
+    they are always orthogonal.
+  \end{itemize}
+
+  And depending on the context one of:
+
+  \begin{itemize}
+    \item Parallelization over \emph{plane waves} ($g$)
+    \item Parallelization over \emph{bands} ($b$)
+  \end{itemize}
+  Also in some cases there is locally parallelization over atoms, PAW projectors...
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parallelization for the computation of the density (plane waves part)}
+  \begin{itemize}
+    \item At the begining of \texttt{mkrho} wave functions are represented in
+      reciprocal space and parallelized over plane waves (we call this the \emph{linalg} layout).
+    \item A transposition of coefficients is performed (changing the parallelization from planes waves to bands, the layout is called \emph{fft}) 
+    \item A Fourier transform is applied (changing the representation from reciprocal space to real space)
+    \item Density is efficiently computed in real space with a natural parallelization
+      over bands 
+  \end{itemize}
+  
+  \alert{}
+
+% As the density is computed by making product of vectors in the real space,
+% it would imply a convolution product in reciprocal space.
+% As a consequence we do not have plane waves at the time we compute the density.
+% Also the natural parallelization is over the band. In the classic DFT case it
+% is straitforward since we simply split the sum between CPUs.\\
+% In our case it is no longer simple since we need arbitrary pairs of bands on
+% each CPUs.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parallelization for the computation of the density (PAW part)}
+  In PAW part there is by definitions no plane waves. Also PAW base has few vectors
+  and parallelization over them is quite restricted.\\
+  Then band parallelization is the default.
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Conclusion}
+    Computation of the density from DFT+DMFT is not possible as is because a given
+    CPU would need to access arbitrary pairs of bands at a time where bands are
+    distributed over CPUs.
+  \end{block}
+\end{frame}

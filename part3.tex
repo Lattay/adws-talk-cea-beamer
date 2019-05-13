@@ -1,0 +1,63 @@
+\begin{frame}
+  \frametitle{Solution for the plane wave part of the density}
+  In this part we will take advantage of the transition from \emph{linalg}
+  data layout to \emph{fft} data layout.
+  
+  \begin{block}{Basic Idea}
+    We will temporarily modify the data to make it look like normal DFT data so
+    that we can pass it to the following procedure as always.
+    It consists in obtaining a diagonal matrix of occupation associated to
+    a base of wave functions vectors.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  In practice we:
+  \begin{itemize}
+    \item Compute the eigen values and eigen vectors of the occupation matrix
+    \item The eigen values will be used as diagonal occupations 
+    \item Apply the matrix formed by the eigen vectors as a rotation matrix to
+      the matrix formed by the Kohn-Sham vectors
+    \item The result of the previous step is passed to the following code as the new
+      Kohn-Sham base.
+  \end{itemize}
+
+  Then the rest of the computation behave just like it always has.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Solution for the PAW part of the density}
+  In this case we cannot use the same kind of tricks because the bands are
+  always distributed.\\
+  However this part is quite light and does not deal with a lot of coefficients.\\
+  A carefully crafted set of point-to-point MPI communications is therefor absolutly
+  perfect for the job.
+\end{frame}
+
+\SetKwFor{ForEach}{for each}{do}{}
+\SetKwIF{If}{ElseIf}{Else}{if}{then}{elif}{else}{}
+
+\begin{frame}[fragile]
+  The algorithm is the following:
+  \begin{algorithm}[H]
+    \If{the current CPU uses correlated bands}{
+      \ForEach{correlated band}{
+        \If{the band is available}{
+          Extract the data and put it in the buffer\;
+          \ForEach{remote CPU}{
+            \If{it uses correlated bands}{
+              \If{it needs the current band}{
+                send the band\;
+              }
+            }
+          }
+        } \Else {
+          \If{this CPU need this band}{
+            receive the band from the CPU that own it and put it in the buffer\;
+          }
+        }
+      }
+    }
+  \end{algorithm}
+  It prevents deadlocks and grant that data are available when they are used.
+\end{frame}

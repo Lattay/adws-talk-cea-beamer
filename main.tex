@@ -1,0 +1,59 @@
+\documentclass[22pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm2e}
+
+\usetheme[numbering=progressbar]{focus}
+\definecolor{main1}{RGB}{159, 0, 14}
+\definecolor{main2}{RGB}{80, 0, 5}
+\definecolor{background}{RGB}{242, 236, 236}
+
+\newcommand{\nologo}{\logo{}}
+\title{Extension of the computation of density to non-diagonal band occupations with the KGB parallelization}
+
+%\subtitle{Applied to DFT+DMFT}
+
+\author{T.~Cavignac}
+
+\institute{
+  CEA DAM Ile-de-France
+  \and
+  École Centrale de Lyon
+}
+
+\date{\textsc{Abinit} developer Workshop, Mai 2019}
+
+\logo{\includegraphics[height=1.5cm]{pic/logo-cea.png}}
+
+\begin{document}
+  \frame{\titlepage}
+
+  \nologo
+
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \tableofcontents
+  \end{frame}
+
+  \section{Non local density, DMFT and DFT}
+  \input{part1.tex}
+
+  \section{paral\_kgb and the repartition of data}
+  \input{part2.tex}
+
+  \section{Solving this incompatibility}
+  \input{part3.tex}
+
+  \section{Validation process and results}
+  \input{part4.tex}
+
+  {\nologo
+    \begin{frame}[focus]
+      Thank you for your attention !
+    \end{frame}
+
+    \begin{frame}[focus]
+      Questions ?
+    \end{frame}
+  }
+
+\end{document}
