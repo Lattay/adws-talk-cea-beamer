@@ -40,8 +40,11 @@
 
 \begin{frame}
   \frametitle{Parallelization for the computation of the density (PAW part)}
-  In PAW part there is by definitions no plane waves. Also PAW base has few vectors
-  and parallelization over them is quite restricted.\\
+  In PAW part:
+  \begin{itemize}
+    \item no plane waves by definition
+    \item few components in the PAW base
+  \end{itemize}
   Then band parallelization is the default.
 \end{frame}
 

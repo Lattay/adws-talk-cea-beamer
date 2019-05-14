@@ -27,11 +27,16 @@
 
 \begin{frame}
   \frametitle{Solution for the PAW part of the density}
-  In this case we cannot use the same kind of tricks because the bands are
-  always distributed.\\
-  However this part is quite light and does not deal with a lot of coefficients.\\
-  A carefully crafted set of point-to-point MPI communications is therefor absolutly
-  perfect for the job.
+  \begin{itemize}
+    \item Band distributed everywere \Rightarrow no tricks this time
+  \end{itemize}
+  But:
+  \begin{itemize}
+    \item PAW components are really few compared to planewaves
+    \item PAW density computation is rather light
+  \end{itemize}
+  A carefully crafted set of point-to-point MPI communications will do the job
+  just well.
 \end{frame}
 
 \SetKwFor{ForEach}{for each}{do}{}
@@ -60,4 +65,16 @@
     }
   \end{algorithm}
   It prevents deadlocks and grant that data are available when they are used.
+\end{frame}
+
+\begin{frame}
+  Some precision about the actual implementations:
+  \begin{itemize}
+    \item MPI communications are implemented as asynchrone communications they are
+      initilized and then the computation can start with already available bands
+    \item Since correlated bands form a block arround the Fermi level, not all CPUs
+      are concerned
+    \item This part could be optimized further but as we will see it does not worth it
+
+  \end{itemize}
 \end{frame}
