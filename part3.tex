@@ -7,17 +7,41 @@
   \end{block}
 \end{frame}
 
+\renewcommand{\hat}{\widehat}
 \begin{frame}
-  In practice we:
-  \begin{enumerate}
-    \item Compute the eigen values and eigen vectors of the occupation matrix
-    \item Eigen values replace classic occupations
-    \item Apply the matrix formed by the eigen vectors as a rotation matrix to
-      the matrix formed by the Kohn-Sham vectors
-    \item The rotated Kohn-Sham vectors are used in place of the originals
-  \end{enumerate}
+  Let
+  \begin{equation}
+    \Psi(\vec{r}) =
+    \left(
+    \begin{matrix}
+      \phi_1(\vec{r})\\
+      \vdots\\
+      \phi_N(\vec{r})
+    \end{matrix}
+    \right)
+      ~
+    \text{and} ~ F = (d_{i,i'})_{i,i' \in \text{bands}}
+  \end{equation}
+  Rewrite (\ref{eq:dmft_density})
+  \begin{equation}
+    n(\vec{r}) =
+    \sum_{i, i' \in \text{bands}} d_{i,i'}~\phi_{i'}(\vec{r})^* \phi_i(\vec{r})
+    = \Psi^*(\vec{r}) F \Psi(\vec{r})
+  \end{equation}
+  Diagonalising $F$ ($D$ diagonal and $R$ unitary such that $F = R^*  D R$) gives us
+  \begin{equation}
+    n(\vec{r}) = \Psi^*(\vec{r}) R^* D R \Psi(\vec{r})
+    = (R \Psi(\vec{r}))^* D (R \Psi(\vec{r}))
+  \end{equation}
+\end{frame}
 
-  Then the rest of the computation behave just like it always has.
+\begin{frame}
+  $\hat{d_i}$ the coefficients of $D$ (eigen values of $F$) \\
+  $\hat{\phi_i}$ the rotated components of $R\Psi$ (rotated Kohn-Sham vectors)
+  \begin{equation}
+    n(\vec{r}) = (R \Psi(\vec{r}))^* D (R \Psi(\vec{r}))  = \sum_{i \in \text{bands}} \hat{d_i} \hat{\phi_i}^*(\vec{r}) \hat{\phi_i}(\vec{r}) 
+  \end{equation}
+  The $\hat{d_i}$ are our new occupations and the components $\hat{\phi_i}$ are our new Kohn-Sham vectors.
 \end{frame}
 
 \begin{frame}
