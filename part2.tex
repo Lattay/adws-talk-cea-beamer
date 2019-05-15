@@ -18,16 +18,16 @@
 
 \begin{frame}
   \frametitle{Parallelization for the computation of the density (plane waves part)}
-  \begin{itemize}
-    \item At the begining of \texttt{mkrho} wave functions are represented in
-      reciprocal space and parallelized over plane waves (we call this the \emph{linalg} layout).
-    \item A transposition of coefficients is performed (changing the parallelization from planes waves to bands, the layout is called \emph{fft}) 
-    \item A Fourier transform is applied (changing the representation from reciprocal space to real space)
-    \item Density is efficiently computed in real space with a natural parallelization
+  \begin{enumerate}
+    \item Before \texttt{mkrho}, diagonalization of the hamiltonian \Rightarrow
+      representation in reciprocal space and plane waves components distributed (for linear algebra, named \emph{linalg} layout).
+    \item Transposition of coefficients (gather plane waves, distribute bands, layout called \emph{fft}) 
+    \item Inverse Fourier transform (change the representation from reciprocal space to real space)
+    \item Density efficiently computed in real space with a natural parallelization
       over bands 
-  \end{itemize}
+  \end{enumerate}
   
-  \alert{}
+%  \alert{}
 
 % As the density is computed by making product of vectors in the real space,
 % it would imply a convolution product in reciprocal space.
@@ -45,7 +45,7 @@
     \item no plane waves by definition
     \item few components in the PAW base
   \end{itemize}
-  Then band parallelization is the default.
+  Then band parallelization is the default. Bands are distributed among CPUs.
 \end{frame}
 
 \begin{frame}

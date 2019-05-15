@@ -1,26 +1,21 @@
 \begin{frame}
   \frametitle{Solution for the plane wave part of the density}
-  In this part we will take advantage of the transition from \emph{linalg}
-  data layout to \emph{fft} data layout.
+  Take advantage of the initial state of data in \texttt{mkrho}
   
-  \begin{block}{Basic Idea}
-    We will temporarily modify the data to make it look like normal DFT data so
-    that we can pass it to the following procedure as always.
-    It consists in obtaining a diagonal matrix of occupation associated to
-    a base of wave functions vectors.
+  \begin{block}{Goal}
+    Temporarily modify the data to make it look like normal DFT data.
   \end{block}
 \end{frame}
 
 \begin{frame}
   In practice we:
-  \begin{itemize}
+  \begin{enumerate}
     \item Compute the eigen values and eigen vectors of the occupation matrix
-    \item The eigen values will be used as diagonal occupations 
+    \item Eigen values replace classic occupations
     \item Apply the matrix formed by the eigen vectors as a rotation matrix to
       the matrix formed by the Kohn-Sham vectors
-    \item The result of the previous step is passed to the following code as the new
-      Kohn-Sham base.
-  \end{itemize}
+    \item The rotated Kohn-Sham vectors are used in place of the originals
+  \end{enumerate}
 
   Then the rest of the computation behave just like it always has.
 \end{frame}
@@ -71,10 +66,10 @@
   Some precision about the actual implementations:
   \begin{itemize}
     \item MPI communications are implemented as asynchrone communications they are
-      initilized and then the computation can start with already available bands
+      initialized and then the computation can start with already available bands
     \item Since correlated bands form a block arround the Fermi level, not all CPUs
       are concerned
-    \item This part could be optimized further but as we will see it does not worth it
+    \item This part could probably be optimized further but as we will see it does not worth it
 
   \end{itemize}
 \end{frame}

@@ -1,12 +1,16 @@
 \begin{frame}
   \frametitle{The DMFT, a non local density theory}
-  The Dynamic Mean Field Theory (DMFT) is one of the theory developed
+  \begin{itemize}
+    \item Dynamic Mean Field Theory (DMFT): one of the theory developed
   to address the problem of correlated electrons in transition metals 
-  and lanthanides.\\
-  It deals with non-local density and is totally different from the DFT.\\
-  To integrate it to \textsc{Abinit}, its output is represented as a non
-  diagonal matrix of occupations of the Kohn-Sham vectors from the DFT part of \textsc{Abinit}.\\
-  Then the density is computed from the Kohn-Sham vectors and this matrix.
+  and lanthanides
+    \item deals with non-local density and is totally different from the DFT
+  \end{itemize}
+  How to integrate it with \textsc{Abinit} ?
+  \begin{itemize}
+    \item Define non-diagonal occupations of the Kohn-Sham vectors from the DFT
+    \item Compute the density from these occupations and the Kohn-Sham vectors
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
