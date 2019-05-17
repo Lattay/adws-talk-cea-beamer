@@ -14,7 +14,7 @@
 \author{T.~Cavignac}
 
 \institute{
-  CEA DAM Ile-de-France
+  CEA, DAM, DIF, 91297 Arpajon Cedex, France
   \and
   École Centrale de Lyon
 }
@@ -33,17 +33,33 @@
     \tableofcontents
   \end{frame}
 
-  \section{Non local density, DMFT and DFT}
+  \section{paral\_kgb and the repartition of data}
   \input{part1.tex}
 
-  \section{paral\_kgb and the repartition of data}
+  \section{Non local density, DMFT and DFT}
   \input{part2.tex}
+
+  \begin{frame}
+    \begin{block}{Conclusion}
+      Computation of the density from DFT+DMFT is not possible as is because a given
+      CPU would need to access arbitrary pairs of bands at a time where bands are
+      distributed over CPUs.
+    \end{block}
+  \end{frame}
 
   \section{Solving this incompatibility}
   \input{part3.tex}
 
   \section{Validation process and results}
   \input{part4.tex}
+
+  \begin{frame}
+    Finally I want to express my gratitude to Marc Torrent, Jordan Bieder, for the time
+    they gave me to answer my questions and facilitate my discovery of \textsc{Abinit}, its code
+    and its ecosystem.\\
+    Of course, I also want to sincerely thank Bernard Amadon for his great supervision all along this work.
+
+  \end{frame}
 
   {\nologo
     \begin{frame}[focus]

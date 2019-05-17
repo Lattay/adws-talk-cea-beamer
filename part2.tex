@@ -1,57 +1,31 @@
 \begin{frame}
-  \frametitle{Reminder on Abinit parallelization}
-  
-  The \texttt{paral\_kgb} mode imply:
+  \frametitle{The DMFT, a non local density theory}
   \begin{itemize}
-    \item Parallelization over $k$ vectors, which is trivial because
-    they are always orthogonal.
+    \item Dynamic Mean Field Theory (DMFT): one of the theory developed
+  to address the problem of correlated electrons in transition metals 
+  and lanthanides
+    \item deals with non-local density and is totally different from the DFT
   \end{itemize}
-
-  And depending on the context one of:
-
+  How to integrate it with \textsc{Abinit} ?
   \begin{itemize}
-    \item Parallelization over \emph{plane waves} ($g$)
-    \item Parallelization over \emph{bands} ($b$)
+    \item Define non-diagonal occupations of the Kohn-Sham vectors from the DFT
+    \item Compute the density from these occupations and the Kohn-Sham vectors
   \end{itemize}
-  Also in some cases there is locally parallelization over atoms, PAW projectors...
 \end{frame}
 
 \begin{frame}
-  \frametitle{Parallelization for the computation of the density (plane waves part)}
-  \begin{enumerate}
-    \item Before \texttt{mkrho}, diagonalization of the hamiltonian \Rightarrow
-      representation in reciprocal space and plane waves components distributed (for linear algebra, named \emph{linalg} layout).
-    \item Transposition of coefficients (gather plane waves, distribute bands, layout called \emph{fft}) 
-    \item Inverse Fourier transform (change the representation from reciprocal space to real space)
-    \item Density efficiently computed in real space with a natural parallelization
-      over bands 
-  \end{enumerate}
-  
-%  \alert{}
+  \frametitle{From DFT density to DMFT+DFT density}
+  Density expressed in terms of Kohn-Sham vectors and occupations:
+  \begin{equation}
+    n(\vec{r}) = \sum_{i \in \text{bands}} d_i~\phi_i(\vec{r})^* \phi_i(\vec{r})
+    \label{eq:dft_density}
+  \end{equation}
 
-% As the density is computed by making product of vectors in the real space,
-% it would imply a convolution product in reciprocal space.
-% As a consequence we do not have plane waves at the time we compute the density.
-% Also the natural parallelization is over the band. In the classic DFT case it
-% is straitforward since we simply split the sum between CPUs.\\
-% In our case it is no longer simple since we need arbitrary pairs of bands on
-% each CPUs.
-\end{frame}
+  With non-diagonals occupations
 
-\begin{frame}
-  \frametitle{Parallelization for the computation of the density (PAW part)}
-  In PAW part:
-  \begin{itemize}
-    \item no plane waves by definition
-    \item few components in the PAW base
-  \end{itemize}
-  Then band parallelization is the default. Bands are distributed among CPUs.
-\end{frame}
-
-\begin{frame}
-  \begin{block}{Conclusion}
-    Computation of the density from DFT+DMFT is not possible as is because a given
-    CPU would need to access arbitrary pairs of bands at a time where bands are
-    distributed over CPUs.
-  \end{block}
+  \begin{equation}
+    n(\vec{r}) = \sum_{i, i' \in \text{bands}} d_{i,i'}~\phi_{i'}(\vec{r})^* \phi_i(\vec{r})
+    \label{eq:dmft_density}
+  \end{equation}
+  \alert{We have now to compute products of vectors from different bands}
 \end{frame}
