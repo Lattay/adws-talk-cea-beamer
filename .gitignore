@@ -1,5 +1,4 @@
 build/
-main.pdf
 *.log
 pic/aux_tol.png
 pic/fldiff_tol.png
