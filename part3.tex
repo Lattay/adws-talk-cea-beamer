@@ -11,35 +11,33 @@
 \begin{frame}
   Let
   \begin{equation}
-    \Psi(\vec{r}) =
+    A =
     \left(
     \begin{matrix}
-      \phi_1(\vec{r})\\
-      \vdots\\
-      \phi_N(\vec{r})
+      \phi_1\\
+      \phi_2\\
+      \vdots
     \end{matrix}
-    \right)
-      ~
-    \text{and} ~ F = (d_{i,i'})_{i,i' \in \text{bands}}
+    \right)~\text{and}~F = {(d_{i,i'})}_{i,i' \in \text{bands}}
   \end{equation}
   Rewrite (\ref{eq:dmft_density})
   \begin{equation}
-    n(\vec{r}) =
-    \sum_{i, i' \in \text{bands}} d_{i,i'}~\phi_{i'}(\vec{r})^* \phi_i(\vec{r})
-    = \Psi^*(\vec{r}) F \Psi(\vec{r})
+    n =
+    \sum_{i, i' \in \text{bands}} d_{i,i'}~\phi_{i'}^* \phi_i
+    = A^* F A
   \end{equation}
   Diagonalising $F$ ($D$ diagonal and $R$ unitary such that $F = R^*  D R$) gives us
   \begin{equation}
-    n(\vec{r}) = \Psi^*(\vec{r}) R^* D R \Psi(\vec{r})
-    = (R \Psi(\vec{r}))^* D (R \Psi(\vec{r}))
+    n = A^* R^* D R A
+      = {(R A)}^* D (R A)
   \end{equation}
 \end{frame}
 
 \begin{frame}
   $\hat{d_i}$ the coefficients of $D$ (eigen values of $F$) \\
-  $\hat{\phi_i}$ the rotated components of $R\Psi$ (rotated Kohn-Sham vectors)
+  $\hat{\phi_i}$ the rotated components of $RA$ (rotated Kohn-Sham vectors)
   \begin{equation}
-    n(\vec{r}) = (R \Psi(\vec{r}))^* D (R \Psi(\vec{r}))  = \sum_{i \in \text{bands}} \hat{d_i} \hat{\phi_i}^*(\vec{r}) \hat{\phi_i}(\vec{r}) 
+    n = (R A)^* D (R A)  = \sum_{i \in \text{bands}} \hat{d_i} \hat{\phi_i}^* \hat{\phi_i}
   \end{equation}
   The $\hat{d_i}$ are our new occupations and the components $\hat{\phi_i}$ are our new Kohn-Sham vectors.
 \end{frame}
